@@ -15,7 +15,8 @@ class SettingScreen extends StatelessWidget {
             children: [
               Text(
                 "Theme : ${context.watch<ThemeProvider>().isDark ? 'Dark' : 'Light'}",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
               const SizedBox(
                 height: 16,

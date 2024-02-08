@@ -1,3 +1,4 @@
+import 'package:contactapp/providers/contact_provider.dart';
 import 'package:contactapp/providers/gallery_provider.dart';
 import 'package:contactapp/providers/theme_provide.dart';
 import 'package:contactapp/screens/home_screen.dart';
@@ -12,6 +13,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => GalleryProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ContactProvider(),
       )
     ],
     child: const MyApp(),

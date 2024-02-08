@@ -21,7 +21,7 @@ class _DetailImageState extends State<DetailImage> {
       appBar: AppBar(
         title: Text(
           widget.title,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
           overflow: TextOverflow.ellipsis,
         ),
         centerTitle: true,
@@ -30,7 +30,7 @@ class _DetailImageState extends State<DetailImage> {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => GalleryScreen(),
+                builder: (context) => const GalleryScreen(),
               ),
               (route) => route.isFirst,
             );
