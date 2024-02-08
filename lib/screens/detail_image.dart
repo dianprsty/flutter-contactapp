@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:contactapp/gallery_screen.dart';
+import 'package:contactapp/screens/gallery_screen.dart';
 import 'package:flutter/material.dart';
 
 class DetailImage extends StatefulWidget {
@@ -30,7 +30,7 @@ class _DetailImageState extends State<DetailImage> {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => GalleryScreen(photo: widget.photo),
+                builder: (context) => GalleryScreen(),
               ),
               (route) => route.isFirst,
             );

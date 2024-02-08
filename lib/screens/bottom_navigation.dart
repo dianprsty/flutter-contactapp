@@ -1,4 +1,5 @@
-import 'package:contactapp/contact_screen.dart';
+import 'package:contactapp/screens/contact_screen.dart';
+import 'package:contactapp/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -12,9 +13,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     ContactScreen(),
-    Text(
-      'Setting',
-    )
+    SettingScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -41,7 +40,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
           ),
         ],
         currentIndex: _selectedIndex,
-        backgroundColor: Colors.black,
         selectedItemColor: Colors.blue[300],
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,

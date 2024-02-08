@@ -1,9 +1,11 @@
 import 'dart:io';
-
+import 'package:contactapp/providers/theme_provide.dart';
+import 'package:contactapp/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({Key? key}) : super(key: key);
@@ -67,12 +69,24 @@ class _ContactScreenState extends State<ContactScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text(
-          "Contact List",
-          style: TextStyle(color: Colors.white),
+        iconTheme: IconThemeData(
+          color: context.watch<ThemeProvider>().isDark
+              ? Colors.white
+              : Colors.black,
         ),
-        backgroundColor: Colors.black,
+        title: const Text("Contact List"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),
+                    ),
+                    (route) => false);
+              },
+              icon: const Icon(Icons.home_filled))
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -492,9 +506,9 @@ class _ContactScreenState extends State<ContactScreen> {
               title: Text(
                 contacts[index]["name"]!,
                 style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
               subtitle: Text(contacts[index]["phone"]!),
               trailing: SizedBox(

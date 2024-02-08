@@ -1,17 +1,14 @@
 import 'dart:async';
 import 'dart:io';
-
-import 'package:contactapp/gallery_screen.dart';
+import 'package:contactapp/providers/gallery_provider.dart';
+import 'package:contactapp/screens/gallery_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 class AddImageScreen extends StatefulWidget {
-  const AddImageScreen({
-    Key? key,
-    required this.photo,
-  }) : super(key: key);
-  final List<Map<String, dynamic>> photo;
+  const AddImageScreen({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -20,21 +17,13 @@ class AddImageScreen extends StatefulWidget {
 
 class _AddImageScreenState extends State<AddImageScreen> {
   XFile? _image;
-  List<Map<String, dynamic>> photo = [];
   final _titleController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
 
   @override
-  void initState() {
-    if (widget.photo.isNotEmpty) {
-      photo = widget.photo;
-    }
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final gallery = Provider.of<GalleryProvider>(context);
     return isLoading
         ? Scaffold(
             body: Center(
@@ -185,19 +174,17 @@ class _AddImageScreenState extends State<AddImageScreen> {
                                   },
                                 );
 
-                                Map<String, dynamic> _data = {
+                                Map<String, dynamic> data = {
                                   "title": _titleController.text,
                                   "image": _image,
                                 };
 
-                                photo.add(_data);
+                                gallery.addPhoto(data);
                                 // ignore: use_build_context_synchronously
                                 Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => GalleryScreen(
-                                      photo: photo,
-                                    ),
+                                    builder: (context) => const GalleryScreen(),
                                   ),
                                   (route) => route.isFirst,
                                 );
@@ -225,9 +212,7 @@ class _AddImageScreenState extends State<AddImageScreen> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => GalleryScreen(
-                                      photo: photo,
-                                    ),
+                                    builder: (context) => const GalleryScreen(),
                                   ),
                                 );
                               },

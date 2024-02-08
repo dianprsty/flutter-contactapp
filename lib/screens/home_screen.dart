@@ -1,5 +1,5 @@
-import 'package:contactapp/bottom_navigation.dart';
-import 'package:contactapp/gallery_screen.dart';
+import 'package:contactapp/screens/bottom_navigation.dart';
+import 'package:contactapp/screens/gallery_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -36,127 +36,128 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text(
-                "Welcome, Dian",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 32,
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  "Welcome, Dian",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 32,
+                  ),
+                  textAlign: TextAlign.start,
                 ),
-                textAlign: TextAlign.start,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(4),
+                const SizedBox(
+                  height: 16,
                 ),
-                padding: const EdgeInsets.all(4),
-                child: AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: <Widget>[
-                      VideoPlayer(_controller),
-                      _ControlsOverlay(controller: _controller),
-                      VideoProgressIndicator(_controller, allowScrubbing: true),
-                    ],
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  padding: const EdgeInsets.all(4),
+                  child: AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: <Widget>[
+                        VideoPlayer(_controller),
+                        _ControlsOverlay(controller: _controller),
+                        VideoProgressIndicator(_controller,
+                            allowScrubbing: true),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const BottomNavigation(),
-                      ));
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.blue,
-                          blurRadius: 4,
-                          blurStyle: BlurStyle.outer,
+                const SizedBox(
+                  height: 24,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BottomNavigation(),
+                        ));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.blue,
+                            blurRadius: 4,
+                            blurStyle: BlurStyle.outer,
+                          )
+                        ],
+                        color: Colors.blue[100]),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/images/contacts.png",
+                          width: 150,
+                          height: 150,
+                          alignment: Alignment.center,
+                        ),
+                        const Text(
+                          "Contact",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         )
                       ],
-                      color: Colors.blue[100]),
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        "assets/images/contacts.png",
-                        width: 150,
-                        height: 150,
-                        alignment: Alignment.center,
-                      ),
-                      const Text(
-                        "Contact",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const GalleryScreen(
-                          photo: [],
+                const SizedBox(
+                  height: 16,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const GalleryScreen(),
+                        ));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.red,
+                            blurRadius: 4,
+                            blurStyle: BlurStyle.outer,
+                          )
+                        ],
+                        color: Colors.red[100]),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/images/gallery.png",
+                          width: 150,
+                          height: 150,
+                          alignment: Alignment.center,
                         ),
-                      ));
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.red,
-                          blurRadius: 4,
-                          blurStyle: BlurStyle.outer,
+                        const Text(
+                          "Gallery",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         )
                       ],
-                      color: Colors.red[100]),
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        "assets/images/gallery.png",
-                        width: 150,
-                        height: 150,
-                        alignment: Alignment.center,
-                      ),
-                      const Text(
-                        "Gallery",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
