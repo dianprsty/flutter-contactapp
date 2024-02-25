@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:contactapp/providers/contact_provider.dart';
+import 'package:contactapp/bloc/contact_bloc.dart';
 import 'package:contactapp/providers/theme_provide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -317,16 +317,26 @@ class _AddContactScreenState extends State<AddContactScreen> {
                     if (!_formKey.currentState!.validate()) {
                       return;
                     }
+
+                    context.read<ContactBloc>().add(
+                          AddContactEvent({
+                            "name": _nameController.text,
+                            "phone": _phoneController.text,
+                            "date": _dateTime,
+                            "color": _bgColor,
+                            "picture": _image,
+                          }),
+                        );
                     setState(
                       () {
-                        Provider.of<ContactProvider>(context, listen: false)
-                            .addContacts({
-                          "name": _nameController.text,
-                          "phone": _phoneController.text,
-                          "date": _dateTime,
-                          "color": _bgColor,
-                          "picture": _image,
-                        });
+                        // Provider.of<ContactProvider>(context, listen: false)
+                        //     .addContacts({
+                        //   "name": _nameController.text,
+                        //   "phone": _phoneController.text,
+                        //   "date": _dateTime,
+                        //   "color": _bgColor,
+                        //   "picture": _image,
+                        // });
 
                         _nameController.text = "";
                         _phoneController.text = "";

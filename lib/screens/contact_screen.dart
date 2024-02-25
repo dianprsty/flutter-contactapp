@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:contactapp/providers/contact_provider.dart';
+import 'package:contactapp/bloc/contact_bloc.dart';
 import 'package:contactapp/providers/theme_provide.dart';
 import 'package:contactapp/screens/add_contact_screen.dart';
 import 'package:contactapp/screens/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({Key? key}) : super(key: key);
@@ -51,10 +51,10 @@ class _ContactScreenState extends State<ContactScreen> {
         child: const Icon(Icons.add, color: Colors.white, size: 32),
       ),
       drawer: const Drawer(),
-      body: Consumer<ContactProvider>(
-        builder: (context, provider, child) {
+      body: BlocBuilder<ContactBloc, ContactState>(
+        builder: (context, state) {
           return ListView.builder(
-            itemCount: provider.contacts.length,
+            itemCount: state.contacts.length,
             itemBuilder: (context, index) {
               return ListTile(
                   selectedTileColor: Colors.blue,
@@ -66,12 +66,12 @@ class _ContactScreenState extends State<ContactScreen> {
                     height: 60,
                     width: 60,
                     decoration: BoxDecoration(
-                        color: provider.contacts[index]["color"],
+                        color: state.contacts[index]["color"],
                         shape: BoxShape.circle),
-                    child: provider.contacts[index]["picture"] == null
+                    child: state.contacts[index]["picture"] == null
                         ? Center(
                             child: Text(
-                              provider.contacts[index]["name"]![0],
+                              state.contacts[index]["name"]![0],
                               style: const TextStyle(
                                   fontSize: 32, color: Colors.white),
                             ),
@@ -79,18 +79,18 @@ class _ContactScreenState extends State<ContactScreen> {
                         : CircleAvatar(
                             radius: 50,
                             backgroundImage: FileImage(
-                              File(provider.contacts[index]["picture"]!.path),
+                              File(state.contacts[index]["picture"]!.path),
                             ),
                           ),
                   ),
                   title: Text(
-                    provider.contacts[index]["name"]!,
+                    state.contacts[index]["name"]!,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  subtitle: Text(provider.contacts[index]["phone"]!),
+                  subtitle: Text(state.contacts[index]["phone"]!),
                   trailing: SizedBox(
                     width: 100,
                     height: 80,
@@ -129,7 +129,7 @@ class _ContactScreenState extends State<ContactScreen> {
                           ],
                         ),
                         Text(
-                          '${provider.contacts[index]['date'].day < 10 ? "0" : ""}${provider.contacts[index]['date'].day} - ${provider.contacts[index]['date'].month < 10 ? "0" : ""}${provider.contacts[index]['date'].month} - ${provider.contacts[index]['date'].year}',
+                          '${state.contacts[index]['date'].day < 10 ? "0" : ""}${state.contacts[index]['date'].day} - ${state.contacts[index]['date'].month < 10 ? "0" : ""}${state.contacts[index]['date'].month} - ${state.contacts[index]['date'].year}',
                         )
                       ],
                     ),
