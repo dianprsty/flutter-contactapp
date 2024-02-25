@@ -1,37 +1,27 @@
 import 'package:contactapp/bloc/contact_bloc.dart';
 import 'package:contactapp/bloc/gallery_bloc.dart';
 import 'package:contactapp/bloc/theme_bloc.dart';
-import 'package:contactapp/providers/gallery_provider.dart';
-import 'package:contactapp/providers/theme_provide.dart';
 import 'package:contactapp/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MultiProvider(
+  runApp(
+    MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => ThemeProvider(),
+        BlocProvider(
+          create: (context) => ContactBloc(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => GalleryProvider(),
+        BlocProvider(
+          create: (context) => GalleryBloc(),
         ),
+        BlocProvider(
+          create: (context) => ThemeBloc(),
+        )
       ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => ContactBloc(),
-          ),
-          BlocProvider(
-            create: (context) => GalleryBloc(),
-          ),
-          BlocProvider(
-            create: (context) => ThemeBloc(),
-          )
-        ],
-        child: const MyApp(),
-      )));
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -43,7 +33,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         fontFamily: "Quicksand",
-        colorScheme: context.watch<ThemeProvider>().themeColor,
+        colorScheme: context.watch<ThemeBloc>().state.themeColor,
       ),
       home: const HomeScreen(),
     );

@@ -6,8 +6,12 @@ part 'gallery_state.dart';
 
 class GalleryBloc extends Bloc<GalleryEvent, GalleryState> {
   GalleryBloc() : super(GalleryInitial()) {
-    on<GalleryEvent>((event, emit) {
-      // TODO: implement event handler
+    on<GalleryAddEvent>((event, emit) {
+      var photos = state.photos;
+
+      photos.add(event.photo);
+
+      emit(GalleryAddState(photos));
     });
   }
 }

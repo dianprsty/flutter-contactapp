@@ -6,3 +6,5 @@ sealed class ThemeEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+final class ThemeChangeEvent extends ThemeEvent {}

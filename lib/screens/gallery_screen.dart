@@ -1,9 +1,9 @@
 import 'dart:io';
-import 'package:contactapp/providers/gallery_provider.dart';
+import 'package:contactapp/bloc/gallery_bloc.dart';
 import 'package:contactapp/screens/add_image_screen.dart';
 import 'package:contactapp/screens/detail_image.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GalleryScreen extends StatefulWidget {
   const GalleryScreen({Key? key}) : super(key: key);
@@ -40,16 +40,18 @@ class _GalleryScreenState extends State<GalleryScreen> {
         body: Container(
           padding: const EdgeInsets.all(8),
           child: GridView.builder(
+            padding: const EdgeInsets.only(bottom: 60),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
               childAspectRatio: 16 / 12,
             ),
-            itemCount: context.watch<GalleryProvider>().photo.length,
+            itemCount:
+                BlocProvider.of<GalleryBloc>(context).state.photos.length,
             itemBuilder: (context, index) {
-              return Consumer<GalleryProvider>(
-                builder: (context, provider, child) {
+              return BlocBuilder<GalleryBloc, GalleryState>(
+                builder: (context, state) {
                   return Container(
                       padding: const EdgeInsets.all(1),
                       child: Column(
@@ -62,9 +64,9 @@ class _GalleryScreenState extends State<GalleryScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => DetailImage(
-                                    image: provider.photo[index]["image"],
-                                    title: provider.photo[index]["title"],
-                                    photo: provider.photo,
+                                    image: state.photos[index]["image"],
+                                    title: state.photos[index]["title"],
+                                    photo: state.photos,
                                   ),
                                 ),
                               );
@@ -75,14 +77,14 @@ class _GalleryScreenState extends State<GalleryScreen> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               clipBehavior: Clip.hardEdge,
-                              child: provider.photo[index]["image"]! is String
+                              child: state.photos[index]["image"]! is String
                                   ? Image.asset(
-                                      provider.photo[index]["image"]!,
+                                      state.photos[index]["image"]!,
                                       alignment: Alignment.center,
                                       fit: BoxFit.cover,
                                     )
                                   : Image.file(
-                                      File(provider.photo[index]["image"].path),
+                                      File(state.photos[index]["image"].path),
                                       alignment: Alignment.topCenter,
                                       fit: BoxFit.cover,
                                     ),
@@ -91,7 +93,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                           Padding(
                             padding: const EdgeInsets.only(left: 4),
                             child: Text(
-                              provider.photo[index]["title"]!,
+                              state.photos[index]["title"]!,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,

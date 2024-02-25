@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:contactapp/providers/gallery_provider.dart';
-import 'package:contactapp/providers/theme_provide.dart';
+import 'package:contactapp/bloc/gallery_bloc.dart';
+import 'package:contactapp/bloc/theme_bloc.dart';
 import 'package:contactapp/screens/gallery_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 
 class AddImageScreen extends StatefulWidget {
   const AddImageScreen({Key? key}) : super(key: key);
@@ -24,7 +24,6 @@ class _AddImageScreenState extends State<AddImageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final gallery = Provider.of<GalleryProvider>(context);
     return isLoading
         ? Scaffold(
             body: Center(
@@ -91,13 +90,15 @@ class _AddImageScreenState extends State<AddImageScreen> {
                                     "Add Image",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color:
-                                          context.watch<ThemeProvider>().isDark
-                                              ? Colors.black
-                                              : Colors.white,
+                                      color: context
+                                              .watch<ThemeBloc>()
+                                              .state
+                                              .isDark
+                                          ? Colors.black
+                                          : Colors.white,
                                     ),
                                   ),
-                                  style: context.watch<ThemeProvider>().isDark
+                                  style: context.watch<ThemeBloc>().state.isDark
                                       ? buttonStyleWhite
                                       : buttonStyleBlack,
                                 ),
@@ -111,7 +112,8 @@ class _AddImageScreenState extends State<AddImageScreen> {
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                             color: context
-                                                    .watch<ThemeProvider>()
+                                                    .watch<ThemeBloc>()
+                                                    .state
                                                     .isDark
                                                 ? Colors.white
                                                 : Colors.black,
@@ -128,7 +130,8 @@ class _AddImageScreenState extends State<AddImageScreen> {
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                               color: context
-                                                      .watch<ThemeProvider>()
+                                                      .watch<ThemeBloc>()
+                                                      .state
                                                       .isDark
                                                   ? Colors.white
                                                   : Colors.black,
@@ -141,7 +144,8 @@ class _AddImageScreenState extends State<AddImageScreen> {
                                             Icons.image_outlined,
                                             size: 100,
                                             color: context
-                                                    .watch<ThemeProvider>()
+                                                    .watch<ThemeBloc>()
+                                                    .state
                                                     .isDark
                                                 ? Colors.white
                                                 : Colors.black54,
@@ -193,7 +197,11 @@ class _AddImageScreenState extends State<AddImageScreen> {
                                       "image": _image,
                                     };
 
-                                    gallery.addPhoto(data);
+                                    // ignore: use_build_context_synchronously
+                                    context
+                                        .read<GalleryBloc>()
+                                        .add(GalleryAddEvent(data));
+
                                     // ignore: use_build_context_synchronously
                                     Navigator.pushAndRemoveUntil(
                                       context,

@@ -1,8 +1,8 @@
-import 'package:contactapp/providers/theme_provide.dart';
+import 'package:contactapp/bloc/theme_bloc.dart';
 import 'package:contactapp/screens/bottom_navigation.dart';
 import 'package:contactapp/screens/gallery_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -56,14 +56,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       textAlign: TextAlign.start,
                     ),
-                    Consumer<ThemeProvider>(
-                      builder: (context, provider, child) => IconButton(
-                          onPressed: () {
-                            provider.changeTheme(!provider.isDark);
-                          },
-                          icon: provider.isDark
-                              ? const Icon(Icons.light_mode_rounded)
-                              : const Icon(Icons.dark_mode_rounded)),
+                    BlocBuilder<ThemeBloc, ThemeState>(
+                      builder: (context, state) => IconButton(
+                        onPressed: () {
+                          context.read<ThemeBloc>().add(ThemeChangeEvent());
+                        },
+                        icon: state.isDark
+                            ? const Icon(Icons.light_mode_rounded)
+                            : const Icon(Icons.dark_mode_rounded),
+                      ),
                     )
                   ],
                 ),
@@ -111,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             blurStyle: BlurStyle.outer,
                           )
                         ],
-                        color: context.watch<ThemeProvider>().isDark
+                        color: context.watch<ThemeBloc>().state.isDark
                             ? Colors.blue
                             : Colors.blue[200]),
                     child: Column(
@@ -155,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             blurStyle: BlurStyle.outer,
                           )
                         ],
-                        color: context.watch<ThemeProvider>().isDark
+                        color: context.watch<ThemeBloc>().state.isDark
                             ? Colors.red
                             : Colors.red[200]),
                     child: Column(

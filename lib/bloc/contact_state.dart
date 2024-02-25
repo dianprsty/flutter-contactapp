@@ -50,6 +50,7 @@ sealed class ContactState extends Equatable {
 final class ContactInitial extends ContactState {}
 
 final class ContactUpdate extends ContactState {
+  @override
   final List<Map<String, dynamic>> contacts;
 
   ContactUpdate(this.contacts);

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:contactapp/bloc/contact_bloc.dart';
-import 'package:contactapp/providers/theme_provide.dart';
+import 'package:contactapp/bloc/theme_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -115,7 +115,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: context.watch<ThemeProvider>().isDark
+                                  color: context.watch<ThemeBloc>().state.isDark
                                       ? Colors.white
                                       : Colors.black,
                                 )),
@@ -147,12 +147,12 @@ class _AddContactScreenState extends State<AddContactScreen> {
                             label: Text(
                               "Select Date",
                               style: TextStyle(
-                                color: context.watch<ThemeProvider>().isDark
+                                color: context.watch<ThemeBloc>().state.isDark
                                     ? Colors.black
                                     : Colors.white,
                               ),
                             ),
-                            style: context.watch<ThemeProvider>().isDark
+                            style: context.watch<ThemeBloc>().state.isDark
                                 ? buttonStyleWhite
                                 : buttonStyleBlack,
                           ),
@@ -212,12 +212,12 @@ class _AddContactScreenState extends State<AddContactScreen> {
                             label: Text(
                               "Pick Color",
                               style: TextStyle(
-                                color: context.watch<ThemeProvider>().isDark
+                                color: context.watch<ThemeBloc>().state.isDark
                                     ? Colors.black
                                     : Colors.white,
                               ),
                             ),
-                            style: context.watch<ThemeProvider>().isDark
+                            style: context.watch<ThemeBloc>().state.isDark
                                 ? buttonStyleWhite
                                 : buttonStyleBlack,
                           ),
@@ -255,12 +255,13 @@ class _AddContactScreenState extends State<AddContactScreen> {
                                 label: Text(
                                   "Select Image",
                                   style: TextStyle(
-                                    color: context.watch<ThemeProvider>().isDark
-                                        ? Colors.black
-                                        : Colors.white,
+                                    color:
+                                        context.watch<ThemeBloc>().state.isDark
+                                            ? Colors.black
+                                            : Colors.white,
                                   ),
                                 ),
-                                style: context.watch<ThemeProvider>().isDark
+                                style: context.watch<ThemeBloc>().state.isDark
                                     ? buttonStyleWhite
                                     : buttonStyleBlack,
                               ),
@@ -273,7 +274,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: context.watch<ThemeProvider>().isDark
+                                  color: context.watch<ThemeBloc>().state.isDark
                                       ? Colors.white
                                       : Colors.black,
                                 )),
@@ -329,15 +330,6 @@ class _AddContactScreenState extends State<AddContactScreen> {
                         );
                     setState(
                       () {
-                        // Provider.of<ContactProvider>(context, listen: false)
-                        //     .addContacts({
-                        //   "name": _nameController.text,
-                        //   "phone": _phoneController.text,
-                        //   "date": _dateTime,
-                        //   "color": _bgColor,
-                        //   "picture": _image,
-                        // });
-
                         _nameController.text = "";
                         _phoneController.text = "";
                         _dateTime = DateTime.now();
