@@ -1,11 +1,19 @@
-import 'package:contactapp/bloc/contact_bloc.dart';
-import 'package:contactapp/bloc/gallery_bloc.dart';
-import 'package:contactapp/bloc/theme_bloc.dart';
-import 'package:contactapp/screens/home_screen.dart';
+import 'package:contactapp/contacts/bloc/contact_bloc.dart';
+import 'package:contactapp/core/shared_components/bloc/theme_bloc.dart';
+import 'package:contactapp/gallery/bloc/gallery_bloc.dart';
+import 'package:contactapp/home/widget/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final SharedPreferences pref = await SharedPreferences.getInstance();
+  bool? theme = pref.getBool("theme");
+  if (theme == null) {
+    pref.setBool("theme", true);
+  }
+
   runApp(
     MultiBlocProvider(
       providers: [
@@ -33,7 +41,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         fontFamily: "Quicksand",
-        colorScheme: context.watch<ThemeBloc>().state.themeColor,
+        colorScheme: context.watch<ThemeBloc>().state is ThemeDark
+            ? const ColorScheme.dark()
+            : const ColorScheme.light(),
       ),
       home: const HomeScreen(),
     );
