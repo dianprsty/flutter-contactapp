@@ -10,15 +10,29 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     on<ThemeChangeEvent>((event, emit) async {
       final SharedPreferences pref = await SharedPreferences.getInstance();
 
-      final bool? isDark = pref.getBool("theme");
+      final bool isDark = pref.getBool("theme") ?? false;
 
-      if (isDark!) {
-        pref.setBool("theme", false);
-        emit(ThemeLight());
-      } else {
+      if (!isDark) {
         pref.setBool("theme", true);
         emit(ThemeDark());
+      } else {
+        pref.setBool("theme", false);
+        emit(ThemeLight());
       }
     });
+
+    on<ThemeSetEvent>(
+      (event, emit) async {
+        final SharedPreferences pref = await SharedPreferences.getInstance();
+
+        final bool isDark = pref.getBool("theme") ?? false;
+
+        if (!isDark) {
+          emit(ThemeLight());
+        } else {
+          emit(ThemeDark());
+        }
+      },
+    );
   }
 }

@@ -11,7 +11,8 @@ void main() async {
   final SharedPreferences pref = await SharedPreferences.getInstance();
   bool? theme = pref.getBool("theme");
   if (theme == null) {
-    pref.setBool("theme", true);
+    theme = false;
+    pref.setBool("theme", false);
   }
 
   runApp(
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    context.watch<ThemeBloc>().add(ThemeSetEvent());
     return MaterialApp(
       theme: ThemeData(
         fontFamily: "Quicksand",
