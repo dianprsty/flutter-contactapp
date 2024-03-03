@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:contactapp/contacts/bloc/contact_bloc.dart';
 import 'package:contactapp/contacts/model/contact_model.dart';
-import 'package:contactapp/contacts/widget/add_contact_screen.dart';
+import 'package:contactapp/contacts/view/add_contact_screen.dart';
 import 'package:contactapp/core/shared_components/bloc/theme_bloc.dart';
-import 'package:contactapp/home/widget/home_screen.dart';
+import 'package:contactapp/home/view/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';

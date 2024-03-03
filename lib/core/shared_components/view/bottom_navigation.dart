@@ -1,5 +1,5 @@
-import 'package:contactapp/contacts/widget/contact_screen.dart';
-import 'package:contactapp/setting/widget/setting_screen.dart';
+import 'package:contactapp/contacts/view/contact_screen.dart';
+import 'package:contactapp/setting/view/setting_screen.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatefulWidget {

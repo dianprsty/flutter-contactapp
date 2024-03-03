@@ -1,7 +1,7 @@
 import 'package:contactapp/contacts/bloc/contact_bloc.dart';
 import 'package:contactapp/core/shared_components/bloc/theme_bloc.dart';
 import 'package:contactapp/gallery/bloc/gallery_bloc.dart';
-import 'package:contactapp/home/widget/home_screen.dart';
+import 'package:contactapp/home/view/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
