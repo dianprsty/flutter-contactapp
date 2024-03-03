@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:contactapp/gallery/bloc/gallery_bloc.dart';
-import 'package:contactapp/gallery/widget/add_image_screen.dart';
-import 'package:contactapp/gallery/widget/detail_image.dart';
+import 'package:contactapp/gallery/view/add_image_screen.dart';
+import 'package:contactapp/gallery/view/detail_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

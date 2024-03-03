@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:contactapp/core/shared_components/bloc/theme_bloc.dart';
 import 'package:contactapp/gallery/bloc/gallery_bloc.dart';
-import 'package:contactapp/gallery/widget/gallery_screen.dart';
+import 'package:contactapp/gallery/view/gallery_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:contactapp/gallery/widget/gallery_screen.dart';
+import 'package:contactapp/gallery/view/gallery_screen.dart';
 import 'package:flutter/material.dart';
 
 class DetailImage extends StatefulWidget {

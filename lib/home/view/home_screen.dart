@@ -1,6 +1,6 @@
 import 'package:contactapp/core/shared_components/bloc/theme_bloc.dart';
 import 'package:contactapp/core/shared_components/view/bottom_navigation.dart';
-import 'package:contactapp/gallery/widget/gallery_screen.dart';
+import 'package:contactapp/gallery/view/gallery_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
