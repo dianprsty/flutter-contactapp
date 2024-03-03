@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:contactapp/contacts/bloc/contact_bloc.dart';
+import 'package:contactapp/contacts/model/contact_model.dart';
 import 'package:contactapp/core/shared_components/bloc/theme_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -322,16 +323,14 @@ class _AddContactScreenState extends State<AddContactScreen> {
                     if (!_formKey.currentState!.validate()) {
                       return;
                     }
+                    ContactModel data = ContactModel(
+                        name: _nameController.text,
+                        phone: _phoneController.text,
+                        date: _dateTime,
+                        color: _bgColor,
+                        picture: _image);
 
-                    context.read<ContactBloc>().add(
-                          AddContactEvent({
-                            "name": _nameController.text,
-                            "phone": _phoneController.text,
-                            "date": _dateTime,
-                            "color": _bgColor,
-                            "picture": _image,
-                          }),
-                        );
+                    context.read<ContactBloc>().add(AddContactEvent(data));
                     setState(
                       () {
                         _nameController.text = "";

@@ -8,10 +8,14 @@ sealed class ContactEvent extends Equatable {
 }
 
 final class AddContactEvent extends ContactEvent {
-  final Map<String, dynamic> contact;
+  final ContactModel contact;
 
   const AddContactEvent(this.contact);
 
   @override
   List<Object> get props => [];
 }
+
+final class SetContactInitial extends ContactEvent {}
+
+final class FinishAddContactEvent extends ContactEvent {}

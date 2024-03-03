@@ -10,9 +10,20 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final SharedPreferences pref = await SharedPreferences.getInstance();
   bool? theme = pref.getBool("theme");
+  List<String>? contacts = pref.getStringList("contacts");
+  List<String> initalData = [
+    '{"name": "Alice Green", "phone": "+1 (555) 123-4567", "date": null, "color": null, "picture": null}',
+    '{"name": "Bob Johnson", "phone": "+44 20 7946 0958", "date": null, "color": null, "picture": null}',
+    '{"name": "Clara Davis", "phone": "+49 30 1234567", "date": null, "color": null, "picture": null}',
+    '{"name": "David Smith", "phone": "+61 2 3456 7890", "date": null, "color": null, "picture": null}',
+    '{"name": "Emily White", "phone": "+81 3-1234-5678", "date": null, "color": null, "picture": null}',
+  ];
   if (theme == null) {
     theme = false;
     pref.setBool("theme", false);
+  }
+  if (contacts == null) {
+    pref.setStringList("contacts", initalData);
   }
 
   runApp(
