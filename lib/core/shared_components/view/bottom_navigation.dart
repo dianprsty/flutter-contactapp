@@ -1,4 +1,4 @@
-import 'package:contactapp/contacts/view/contact_screen.dart';
+import 'package:contactapp/contact/view/contact_screen.dart';
 import 'package:contactapp/setting/view/setting_screen.dart';
 import 'package:flutter/material.dart';
 

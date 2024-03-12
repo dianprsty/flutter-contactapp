@@ -1,7 +1,9 @@
-import 'package:contactapp/contacts/bloc/contact_bloc.dart';
+import 'package:contactapp/auth/view/login_screen.dart';
+// import 'package:contactapp/auth/view/register_screen.dart';
+import 'package:contactapp/contact/bloc/contact_bloc.dart';
 import 'package:contactapp/core/shared_components/bloc/theme_bloc.dart';
 import 'package:contactapp/gallery/bloc/gallery_bloc.dart';
-import 'package:contactapp/home/view/home_screen.dart';
+// import 'package:contactapp/home/view/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,7 +60,7 @@ class MyApp extends StatelessWidget {
             ? const ColorScheme.dark()
             : const ColorScheme.light(),
       ),
-      home: const HomeScreen(),
+      home: const LoginScreen(), //const RegisterScreen(), //const HomeScreen(),
     );
   }
 }

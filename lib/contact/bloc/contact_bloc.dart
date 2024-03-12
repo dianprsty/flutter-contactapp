@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:contactapp/contacts/model/contact_model.dart';
+import 'package:contactapp/contact/model/contact_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
