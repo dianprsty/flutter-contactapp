@@ -1,8 +1,10 @@
+import 'package:contactapp/auth/bloc/auth_bloc.dart';
 import 'package:contactapp/auth/view/login_screen.dart';
 // import 'package:contactapp/auth/view/register_screen.dart';
 import 'package:contactapp/contact/bloc/contact_bloc.dart';
 import 'package:contactapp/core/shared_components/bloc/theme_bloc.dart';
 import 'package:contactapp/gallery/bloc/gallery_bloc.dart';
+import 'package:contactapp/home/view/home_screen.dart';
 // import 'package:contactapp/home/view/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +15,7 @@ void main() async {
   final SharedPreferences pref = await SharedPreferences.getInstance();
   bool? theme = pref.getBool("theme");
   List<String>? contacts = pref.getStringList("contacts");
+  String? email = pref.getString("email");
   List<String> initalData = [
     '{"name": "Alice Green", "phone": "+1 (555) 123-4567", "date": null, "color": null, "picture": null}',
     '{"name": "Bob Johnson", "phone": "+44 20 7946 0958", "date": null, "color": null, "picture": null}',
@@ -39,15 +42,19 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => ThemeBloc(),
+        ),
+        BlocProvider(
+          create: (context) => AuthBloc(),
         )
       ],
-      child: const MyApp(),
+      child: MyApp(email: email),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, this.email});
+  final String? email;
 
   // This widget is the root of your application.
   @override
@@ -60,7 +67,7 @@ class MyApp extends StatelessWidget {
             ? const ColorScheme.dark()
             : const ColorScheme.light(),
       ),
-      home: const LoginScreen(), //const RegisterScreen(), //const HomeScreen(),
+      home: email != null ? const HomeScreen() : const LoginScreen(), //const RegisterScreen(), //const HomeScreen(),
     );
   }
 }

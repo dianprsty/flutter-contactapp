@@ -1,3 +1,6 @@
+import 'package:contactapp/auth/bloc/auth_bloc.dart';
+import 'package:contactapp/auth/view/register_screen.dart';
+import 'package:contactapp/home/view/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,12 +15,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   late bool _isHidePassword;
+  late AuthBloc authBloc;
 
   @override
   void initState() {
     super.initState();
     setState(() {
       _isHidePassword = true;
+      authBloc = AuthBloc();
     });
   }
 
@@ -114,6 +119,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     ElevatedButton(
                       onPressed: () {
                         if (!_formKey.currentState!.validate()) return;
+
+                        authBloc.add(
+                          AuthLoginEvent(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          ),
+                        );
+
+                        if (authBloc.state is AuthSuccess) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomeScreen(),
+                            ),
+                          );
+                        }
                       },
                       style: const ButtonStyle(
                         minimumSize:
@@ -151,7 +172,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         TextButton(
                             onPressed: () {
-                              //
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const RegisterScreen(),
+                                ),
+                              );
                             },
                             child: const Text(
                               "Register",

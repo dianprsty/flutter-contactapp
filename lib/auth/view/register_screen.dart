@@ -1,3 +1,6 @@
+import 'package:contactapp/auth/bloc/auth_bloc.dart';
+import 'package:contactapp/auth/model/user_model.dart';
+import 'package:contactapp/auth/view/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -13,12 +16,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   late bool _isHidePassword;
+  late AuthBloc authBloc;
 
   @override
   void initState() {
     super.initState();
     setState(() {
       _isHidePassword = true;
+      authBloc = AuthBloc();
     });
   }
 
@@ -75,10 +80,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return "Please input your email";
                         }
 
-                        RegExp regexEmail = RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+                        RegExp regexEmail =
+                            RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
                         bool isEmailValid = regexEmail.hasMatch(value);
 
-                        if(!isEmailValid){
+                        if (!isEmailValid) {
                           return "Invalid email format";
                         }
 
@@ -101,7 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: _passwordController,
                       obscureText: _isHidePassword,
                       validator: (value) {
-                        if(value == null || value.length < 8){
+                        if (value == null || value.length < 8) {
                           return "Password should be 8 characters or more";
                         }
 
@@ -135,6 +141,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ElevatedButton(
                       onPressed: () {
                         if (!_formKey.currentState!.validate()) return;
+
+                        UserModel user = UserModel(
+                          name: _nameController.text,
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        );
+                        authBloc.add(AuthRegisterEvent(user));
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
                       },
                       style: const ButtonStyle(
                         minimumSize:
@@ -171,8 +191,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: TextStyle(fontSize: 18),
                         ),
                         TextButton(
-                            onPressed: () {
-                              //
+                            onPressed: () async {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
+                                ),
+                              );
                             },
                             child: const Text(
                               "Login",

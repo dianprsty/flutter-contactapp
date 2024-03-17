@@ -8,3 +8,6 @@ sealed class AuthState extends Equatable {
 }
 
 final class AuthInitial extends AuthState {}
+final class AuthCheck extends AuthState {}
+final class AuthSuccess extends AuthState {}
+final class AuthFailed extends AuthState {}
