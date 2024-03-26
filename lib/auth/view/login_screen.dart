@@ -127,13 +127,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         );
 
-                        if (authBloc.state is AuthSuccess) {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => const HomeScreen(),
                             ),
                           );
+                        if (authBloc.state is AuthSuccess) {
                         }
                       },
                       style: const ButtonStyle(

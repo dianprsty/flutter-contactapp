@@ -1,6 +1,7 @@
 import 'package:contactapp/core/shared_components/bloc/theme_bloc.dart';
 import 'package:contactapp/core/shared_components/view/bottom_navigation.dart';
 import 'package:contactapp/gallery/view/gallery_screen.dart';
+import 'package:contactapp/todo/view/todo_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
@@ -115,12 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: context.watch<ThemeBloc>().state is ThemeDark
                             ? Colors.blue
                             : Colors.blue[200]),
-                    child: Column(
+                    child: Row(
                       children: [
                         Image.asset(
                           "assets/images/contacts.png",
                           width: 150,
-                          height: 150,
+                          height: 50,
                           alignment: Alignment.center,
                         ),
                         const Text(
@@ -159,16 +160,60 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: context.watch<ThemeBloc>().state is ThemeDark
                             ? Colors.red
                             : Colors.red[200]),
-                    child: Column(
+                    child: Row(
                       children: [
                         Image.asset(
                           "assets/images/gallery.png",
                           width: 150,
-                          height: 150,
+                          height: 50,
                           alignment: Alignment.center,
                         ),
                         const Text(
                           "Gallery",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const TodoListScreen(),
+                        ));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.green,
+                            blurRadius: 4,
+                            blurStyle: BlurStyle.outer,
+                          )
+                        ],
+                        color: context.watch<ThemeBloc>().state is ThemeDark
+                            ? Colors.green
+                            : Colors.green[200]),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "assets/images/todo.png",
+                          width: 150,
+                          height: 50,
+                          alignment: Alignment.center,
+                        ),
+                        const Text(
+                          "Todo List",
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,

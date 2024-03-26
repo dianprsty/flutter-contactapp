@@ -24,10 +24,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       var db = UserLocalDatasource.instance;
       emit(AuthCheck());
       db.login(event.email, event.password).then((value) async{
-        emit(AuthSuccess());
         log("LOGIIIIN ${value.email}");
         SharedPreferences pref = await SharedPreferences.getInstance();
         pref.setString("email", value.email);
+        emit(AuthSuccess());
       }).onError((error, stackTrace) {
         emit(AuthFailed());
       });

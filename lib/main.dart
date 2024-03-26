@@ -1,17 +1,26 @@
+import 'dart:developer';
+
 import 'package:contactapp/auth/bloc/auth_bloc.dart';
 import 'package:contactapp/auth/view/login_screen.dart';
 // import 'package:contactapp/auth/view/register_screen.dart';
 import 'package:contactapp/contact/bloc/contact_bloc.dart';
+import 'package:contactapp/core/config/env.dart';
 import 'package:contactapp/core/shared_components/bloc/theme_bloc.dart';
 import 'package:contactapp/gallery/bloc/gallery_bloc.dart';
 import 'package:contactapp/home/view/home_screen.dart';
+import 'package:contactapp/todo/bloc/todo_bloc.dart';
 // import 'package:contactapp/home/view/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: ".env");
+
   final SharedPreferences pref = await SharedPreferences.getInstance();
   bool? theme = pref.getBool("theme");
   List<String>? contacts = pref.getStringList("contacts");
@@ -23,6 +32,7 @@ void main() async {
     '{"name": "David Smith", "phone": "+61 2 3456 7890", "date": null, "color": null, "picture": null}',
     '{"name": "Emily White", "phone": "+81 3-1234-5678", "date": null, "color": null, "picture": null}',
   ];
+  
   if (theme == null) {
     theme = false;
     pref.setBool("theme", false);
@@ -30,6 +40,13 @@ void main() async {
   if (contacts == null) {
     pref.setStringList("contacts", initalData);
   }
+
+  await Supabase.initialize(
+    url: Environtment.supabaseUrl,
+    anonKey: Environtment.supabaseAnnonKey,
+  );
+
+  log("URL ${Environtment.supabaseUrl}");
 
   runApp(
     MultiBlocProvider(
@@ -45,6 +62,9 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => AuthBloc(),
+        ),
+        BlocProvider(
+          create: (context) => TodoBloc(),
         )
       ],
       child: MyApp(email: email),
@@ -67,7 +87,9 @@ class MyApp extends StatelessWidget {
             ? const ColorScheme.dark()
             : const ColorScheme.light(),
       ),
-      home: email != null ? const HomeScreen() : const LoginScreen(), //const RegisterScreen(), //const HomeScreen(),
+      home: email != null
+          ? const HomeScreen()
+          : const LoginScreen(), //const RegisterScreen(), //const HomeScreen(),
     );
   }
 }
