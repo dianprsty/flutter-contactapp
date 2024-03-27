@@ -38,7 +38,6 @@ class _AddContactScreenState extends State<AddContactScreen> {
           child: Container(
             padding: const EdgeInsets.all(16),
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(

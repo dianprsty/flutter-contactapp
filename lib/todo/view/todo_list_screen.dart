@@ -1,4 +1,9 @@
+import 'package:contactapp/core/shared_components/bloc/theme_bloc.dart';
 import 'package:contactapp/todo/bloc/todo_bloc.dart';
+import 'package:contactapp/todo/model/todo_model.dart';
+import 'package:contactapp/todo/view/add_todo.dart';
+import 'package:contactapp/todo/view/detail_todo_screen.dart';
+import 'package:contactapp/todo/view/edit_todo_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,11 +31,25 @@ class _TodoListScreenState extends State<TodoListScreen> {
       appBar: AppBar(
         backgroundColor: Colors.green,
         iconTheme: const IconThemeData(color: Colors.white),
+        centerTitle: true,
         title: const Text(
           "Todo List",
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddTodo(),
+            ),
+          );
+        },
+        backgroundColor: Colors.blue,
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add, color: Colors.white, size: 32),
       ),
       body: SafeArea(
         child: BlocBuilder<TodoBloc, TodoState>(
@@ -45,8 +64,18 @@ class _TodoListScreenState extends State<TodoListScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       margin: const EdgeInsets.only(bottom: 8),
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black38),
-                          borderRadius: BorderRadius.circular(8)),
+                        border: Border.all(
+                          color: context.watch<ThemeBloc>().state is ThemeDark
+                              ? Colors.white38
+                              : Colors.black38,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                        color: state.todos![index].isDone
+                            ? Colors.green[300]
+                            : context.watch<ThemeBloc>().state is ThemeDark
+                                ? Colors.black
+                                : Colors.white,
+                      ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,26 +85,44 @@ class _TodoListScreenState extends State<TodoListScreen> {
                             child: Row(
                               children: [
                                 Checkbox(
-                                  value: state.todos![index]["is_done"],
-                                  semanticLabel: state.todos![index]["title"],
+                                  value: state.todos![index].isDone,
+                                  semanticLabel: state.todos![index].title,
+                                  activeColor: Colors.blue,
                                   onChanged: (value) {
-                                    //
+                                    Todo todo = state.todos![index];
+                                    todo.isDone = !todo.isDone;
+                                    context
+                                        .read<TodoBloc>()
+                                        .add(TodoUpdateDataEvent(todo: todo));
                                   },
                                 ),
                                 Flexible(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetailTodoScreen(
+                                              todo: state.todos![index],
+                                            ),
+                                          ));
+                                    },
                                     child: Text(
-                                  state.todos![index]["title"],
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    decoration: state.todos![index]["is_done"]
-                                        ? TextDecoration.lineThrough
-                                        : TextDecoration.none,
+                                      state.todos![index].title,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        decoration: state.todos![index].isDone
+                                            ? TextDecoration.lineThrough
+                                            : TextDecoration.none,
+                                      ),
+                                      softWrap: true,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
-                                  softWrap: true,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                ))
+                                )
                               ],
                             ),
                           ),
@@ -83,7 +130,13 @@ class _TodoListScreenState extends State<TodoListScreen> {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  //
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      Todo todo = state.todos![index];
+                                      return EditTodoScreen(todo: todo);
+                                    }),
+                                  );
                                 },
                                 icon: const Icon(
                                   Icons.edit,
@@ -92,7 +145,10 @@ class _TodoListScreenState extends State<TodoListScreen> {
                               ),
                               IconButton(
                                 onPressed: () {
-                                  //
+                                  context.read<TodoBloc>().add(
+                                        TodoDeleteDataEvent(
+                                            id: state.todos![index].id!),
+                                      );
                                 },
                                 icon: const Icon(
                                   Icons.delete,

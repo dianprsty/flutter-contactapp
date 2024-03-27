@@ -1,15 +1,11 @@
-import 'dart:developer';
-
 import 'package:contactapp/auth/bloc/auth_bloc.dart';
 import 'package:contactapp/auth/view/login_screen.dart';
-// import 'package:contactapp/auth/view/register_screen.dart';
 import 'package:contactapp/contact/bloc/contact_bloc.dart';
 import 'package:contactapp/core/config/env.dart';
 import 'package:contactapp/core/shared_components/bloc/theme_bloc.dart';
 import 'package:contactapp/gallery/bloc/gallery_bloc.dart';
 import 'package:contactapp/home/view/home_screen.dart';
 import 'package:contactapp/todo/bloc/todo_bloc.dart';
-// import 'package:contactapp/home/view/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -45,8 +41,6 @@ void main() async {
     url: Environtment.supabaseUrl,
     anonKey: Environtment.supabaseAnnonKey,
   );
-
-  log("URL ${Environtment.supabaseUrl}");
 
   runApp(
     MultiBlocProvider(

@@ -10,7 +10,7 @@ sealed class TodoState extends Equatable {
 final class TodoInitial extends TodoState {}
 final class TodoLoading extends TodoState {}
 final class TodoFinish extends TodoState {
-  final List<Map<String, dynamic>>? todos;
+  final List<Todo>? todos;
 
   const TodoFinish({required this.todos});
 }
