@@ -127,14 +127,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         );
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomeScreen(),
-                            ),
-                          );
-                        if (authBloc.state is AuthSuccess) {
-                        }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
+                        if (authBloc.state is AuthSuccess) {}
                       },
                       style: const ButtonStyle(
                         minimumSize:
@@ -171,19 +170,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(fontSize: 18),
                         ),
                         TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const RegisterScreen(),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              "Register",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ))
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RegisterScreen(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "Register",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        )
                       ],
                     )
                   ],

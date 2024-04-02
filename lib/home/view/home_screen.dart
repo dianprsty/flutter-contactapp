@@ -1,6 +1,7 @@
 import 'package:contactapp/core/shared_components/bloc/theme_bloc.dart';
 import 'package:contactapp/core/shared_components/view/bottom_navigation.dart';
 import 'package:contactapp/gallery/view/gallery_screen.dart';
+import 'package:contactapp/product/view/list_product_screen.dart';
 import 'package:contactapp/todo/view/todo_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -218,6 +219,53 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ListProductScreen(),
+                        ));
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.green,
+                            blurRadius: 4,
+                            blurStyle: BlurStyle.outer,
+                          )
+                        ],
+                        color: context.watch<ThemeBloc>().state is ThemeDark
+                            ? Colors.yellow
+                            : Colors.yellow[200]),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "assets/images/product.png",
+                          width: 150,
+                          height: 50,
+                          alignment: Alignment.center,
+                        ),
+                        Text(
+                          "Product",
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              shadows: context.watch<ThemeBloc>().state
+                                      is ThemeDark
+                                  ? [const Shadow(color: Colors.black, blurRadius: 4)]
+                                  : []),
                         )
                       ],
                     ),

@@ -5,6 +5,7 @@ import 'package:contactapp/core/config/env.dart';
 import 'package:contactapp/core/shared_components/bloc/theme_bloc.dart';
 import 'package:contactapp/gallery/bloc/gallery_bloc.dart';
 import 'package:contactapp/home/view/home_screen.dart';
+import 'package:contactapp/product/bloc/product_bloc.dart';
 import 'package:contactapp/todo/bloc/todo_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +29,7 @@ void main() async {
     '{"name": "David Smith", "phone": "+61 2 3456 7890", "date": null, "color": null, "picture": null}',
     '{"name": "Emily White", "phone": "+81 3-1234-5678", "date": null, "color": null, "picture": null}',
   ];
-  
+
   if (theme == null) {
     theme = false;
     pref.setBool("theme", false);
@@ -59,6 +60,9 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => TodoBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ProductBloc(),
         )
       ],
       child: MyApp(email: email),
@@ -83,7 +87,7 @@ class MyApp extends StatelessWidget {
       ),
       home: email != null
           ? const HomeScreen()
-          : const LoginScreen(), //const RegisterScreen(), //const HomeScreen(),
+          : const LoginScreen(),
     );
   }
 }
