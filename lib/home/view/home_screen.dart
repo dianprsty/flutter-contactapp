@@ -98,10 +98,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const BottomNavigation(),
-                        ));
+                      context,
+                      // MaterialPageRoute(
+                      //   builder: (context) => const BottomNavigation(),
+                      // ),
+                      PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  const BottomNavigation(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            var begin = const Offset(1.0, 0.0);
+                            var end = Offset.zero;
+                            var curve = Curves.easeIn;
+
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+
+                            return SlideTransition(
+                              position: animation.drive(tween),
+                              child: child,
+                            );
+                          },
+                          transitionDuration: Durations.medium4),
+                    );
                   },
                   child: Container(
                     padding: const EdgeInsets.all(16),
@@ -262,10 +282,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
-                              shadows: context.watch<ThemeBloc>().state
-                                      is ThemeDark
-                                  ? [const Shadow(color: Colors.black, blurRadius: 4)]
-                                  : []),
+                              shadows:
+                                  context.watch<ThemeBloc>().state is ThemeDark
+                                      ? [
+                                          const Shadow(
+                                              color: Colors.black,
+                                              blurRadius: 4)
+                                        ]
+                                      : []),
                         )
                       ],
                     ),
