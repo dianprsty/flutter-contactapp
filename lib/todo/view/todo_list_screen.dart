@@ -60,8 +60,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
                 child: ListView.builder(
                   itemCount: state.todos != null ? state.todos!.length : 0,
                   itemBuilder: (context, index) {
-                    return Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
+                    return AnimatedContainer(
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                       margin: const EdgeInsets.only(bottom: 8),
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -76,6 +76,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                 ? Colors.black
                                 : Colors.white,
                       ),
+                      duration: const Duration(milliseconds: 400),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -166,8 +167,44 @@ class _TodoListScreenState extends State<TodoListScreen> {
             }
 
             if (state is TodoLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Container(
+                padding: const EdgeInsets.all(16),
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return AnimatedContainer(
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                      margin: const EdgeInsets.only(bottom: 8),
+                      height: 65,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: context.watch<ThemeBloc>().state is ThemeDark
+                              ? Colors.white38
+                              : Colors.black38,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                        color:  context.watch<ThemeBloc>().state is ThemeDark
+                                ? Colors.white12
+                                : Colors.black12,
+                      ),
+                      duration: const Duration(microseconds: 300),
+                      child: const Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                           Flexible(
+                            fit: FlexFit.tight,
+                            child:  Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 32),
+                              child: Text(""), //LinearProgressIndicator(),
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    
+                      );
+                  },
+                ),
               );
             }
 
